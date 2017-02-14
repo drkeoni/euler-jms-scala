@@ -77,11 +77,13 @@ object NumberUtils
     ds.zipWithIndex
       .reduceLeft((p1,p2) => if(p2._1 > p1._1) p2 else p1) 
       ._2
-      
-  /** Returns tuple (boolean table from 0 until maxPrime, sequence of primes) **/
-  def primes( maxPrime:Int ) =
+
+  /** Returns tuple (boolean table from 0 until maxPrime, sequence of primes)
+    *
+    */
+  def primes( maxPrime:Int ) : (Array[Boolean],Seq[Int]) =
   {
-    val heap = Array.fill(maxPrime)(true)
+    val heap = Array.fill[Boolean](maxPrime)(true)
     // implements sieve of Erastothenes
     def sieve() =
     {
@@ -109,7 +111,8 @@ object NumberUtils
     }
     
     sieve()
-    ( heap, heap.view(2,heap.length).zipWithIndex.filter(_._1).map(_._2 + 2) )
+    ( heap, heap.drop(2).zipWithIndex.filter(_._1).map(_._2 + 2) )
+
   }
   
   /** Returns Array[Int][Byte] of all n! permutations **/
